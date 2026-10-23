@@ -8607,7 +8607,8 @@ def _span_backward(ctx, grad_out, d_buf, d_g0, d_g1, d_g2, d_gbuf):
     edges, nodes, c2 = buf.shape[0], x_full.shape[0], 2 * channels
     del nodes
     dev, dt = buf.device, buf.dtype
-    tail = (None,) * 26
+    # Ten differentiable/graph inputs above, then 25 frozen/config inputs.
+    tail = (None,) * 25
 
     if torch.is_grad_enabled():
         raise NotImplementedError(

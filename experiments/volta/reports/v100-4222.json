@@ -1,0 +1,103 @@
+{
+  "torch": "2.14.1+cu126",
+  "cuda": "12.6",
+  "triton": "3.8.0",
+  "backend": "experimental_volta_ieee (CUDA capability 7.0)",
+  "slurm_job_id": "4222",
+  "cuda_graph": true,
+  "cases": [
+    {
+      "name": "water",
+      "atoms": 3,
+      "task": "omol",
+      "energy_error_ev_per_atom": 5.032667710717457e-07,
+      "max_abs_error": {
+        "energy": 1.5098003132152371e-06,
+        "forces": 1.7404556274414062e-05,
+        "stress": 2.5176674270710464e-05
+      },
+      "nitro_ms": 4.137976444326341,
+      "reference_ms": 60.537108103744686,
+      "finite_difference_force_error_ev_a": 0.0016720021285436815
+    },
+    {
+      "name": "ethanol",
+      "atoms": 9,
+      "task": "omol",
+      "energy_error_ev_per_atom": 2.3196936227678734e-06,
+      "max_abs_error": {
+        "energy": 2.0877242604910862e-05,
+        "forces": 0.00014513731002807617,
+        "stress": 0.00029000809744028633
+      },
+      "nitro_ms": 4.714101552963257,
+      "reference_ms": 70.39241306483746
+    },
+    {
+      "name": "water_ion",
+      "atoms": 3,
+      "task": "omol",
+      "energy_error_ev_per_atom": 0.00012670326304942137,
+      "max_abs_error": {
+        "energy": 0.0003801097891482641,
+        "forces": 0.039887428283691406,
+        "stress": 0.0495608132318921
+      },
+      "nitro_ms": 4.954986390657723,
+      "reference_ms": 67.93694186490029
+    },
+    {
+      "name": "hydrogen",
+      "atoms": 1,
+      "task": "omol",
+      "energy_error_ev_per_atom": 0.0,
+      "max_abs_error": {
+        "energy": 0.0,
+        "forces": 0.0,
+        "stress": 0.0
+      },
+      "nitro_ms": 4.071062081493437,
+      "reference_ms": 66.444386029616
+    },
+    {
+      "name": "no_edges",
+      "atoms": 2,
+      "task": "omol",
+      "energy_error_ev_per_atom": 9.598732049198588e-07,
+      "max_abs_error": {
+        "energy": 1.9197464098397177e-06,
+        "forces": 0.0,
+        "stress": 0.0
+      },
+      "nitro_ms": 3.972389502450824,
+      "reference_ms": 63.44822549726814
+    },
+    {
+      "name": "copper32",
+      "atoms": 32,
+      "task": "omat",
+      "energy_error_ev_per_atom": 3.273817542925883e-05,
+      "max_abs_error": {
+        "energy": 0.0010476216137362826,
+        "forces": 4.95402542579626e-05,
+        "stress": 2.0696606220084283e-05
+      },
+      "nitro_ms": 9.315541479736567,
+      "reference_ms": 66.19468389544636
+    },
+    {
+      "name": "copper108",
+      "atoms": 108,
+      "task": "omat",
+      "energy_error_ev_per_atom": 1.1879171553788285e-05,
+      "max_abs_error": {
+        "energy": 0.0012829505278091347,
+        "forces": 3.792781877010043e-05,
+        "stress": 2.6269697093674223e-05
+      },
+      "nitro_ms": 20.594236557371914,
+      "reference_ms": 75.84729953669012
+    }
+  ],
+  "passed": true
+}

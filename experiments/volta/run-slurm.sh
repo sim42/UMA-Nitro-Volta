@@ -14,4 +14,5 @@ export OMP_NUM_THREADS=4
 base_prefix=$(.venv/bin/python -c 'import sys; print(sys.base_prefix)')
 export LD_LIBRARY_PATH="$base_prefix/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 .venv/bin/python experiments/volta/probe.py
+.venv/bin/python -m pytest --confcutdir=experiments/volta -q experiments/volta/test_kernels.py
 .venv/bin/python experiments/volta/validate.py "${UMA_CHECKPOINT:-checkpoints/uma-s-1p2p1.pt}" "$@"

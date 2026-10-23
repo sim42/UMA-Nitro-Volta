@@ -63,6 +63,8 @@ def main():
     torch.set_num_threads(4)
     report = {"torch": torch.__version__, "cuda": torch.version.cuda,
               "triton": nitro.triton.__version__, "backend": nitro.kernel_backend_summary(),
+              "gpu": torch.cuda.get_device_name(),
+              "source_commit": os.environ.get("UMA_SOURCE_COMMIT", "unrecorded"),
               "slurm_job_id": os.environ["SLURM_JOB_ID"],
               "cuda_graph": nitro._USE_GRAPH, "cases": []}
     systems = [

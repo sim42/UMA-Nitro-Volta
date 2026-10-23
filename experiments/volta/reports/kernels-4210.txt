@@ -1,0 +1,12 @@
+.........                                                                [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/torchtnt/utils/version.py:12
+  /home/sang/Dev/UMA-Nitro-Volta/.venv/lib/python3.11/site-packages/torchtnt/utils/version.py:12: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+../../../..<base-python-env>/lib/python3.11/site-packages/torch/jit/_script.py:1491
+  <base-python-env>/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 2 warnings in 9.42s

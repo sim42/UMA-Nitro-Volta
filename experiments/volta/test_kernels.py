@@ -19,9 +19,9 @@ def test_gather_scatter(edges, channels, strided):
     out = torch.empty(edges, 9, channels * step, device='cuda')[:, :, ::step]
     gather(src, index, out)
     torch.testing.assert_close(out, src[index.long()], atol=0, rtol=0)
-    grad = torch.randn_like(out).half()
+    grad = torch.randn(edges, 9, channels * step, device='cuda', dtype=torch.float16)[:, :, ::step]
     scale = torch.randn(edges * step, device='cuda')[::step]
-    target = torch.randn_like(src)
+    target = torch.randn(13, 9, channels * step, device='cuda')[:, :, ::step]
     expected = target.clone().index_add_(0, index, grad.float() * scale[:, None, None])
     scatter(grad, index, scale, target)
     torch.testing.assert_close(target, expected, atol=2e-5, rtol=2e-5)
