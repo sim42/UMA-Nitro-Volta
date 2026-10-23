@@ -219,7 +219,7 @@ def test_uma_nitro_reuses_graph_for_same_key(monkeypatch):
         "expected_tf32",
     ),
     [
-        ((7, 0), "portable_pytorch_ieee", False, False, False),
+        ((7, 0), "experimental_volta_ieee", False, False, False),
         ((8, 0), "portable_pytorch_ieee", False, False, False),
         ((8, 6), "portable_pytorch_ieee", False, False, False),
         ((8, 9), "portable_pytorch_ieee", False, False, False),

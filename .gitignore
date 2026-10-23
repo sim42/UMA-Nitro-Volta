@@ -144,3 +144,7 @@ package-lock.json
 bulks.pkl
 # MyST build outputs
 _build
+
+# Local experiment environments and model assets
+.venv*/
+*.pt
