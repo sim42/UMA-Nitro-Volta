@@ -21,6 +21,6 @@ ray[serve]==2.55.1
 # Pin to 6.x until Ray ships a fix.
 protobuf<7
 ipykernel==7.2.0
-jupyter_book==2.1.5
+jupyter_book==2.1.7
 pytest-xdist==3.8.0
 nvalchemi-toolkit-ops==0.3.1
