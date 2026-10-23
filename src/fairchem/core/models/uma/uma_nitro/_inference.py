@@ -127,7 +127,9 @@ def _kernel_policy(capability: tuple[int, int]) -> _KernelPolicy:
     use_blackwell_hybrid = major in (10, 11, 12)
     use_cute_kernels = use_hopper_gemm or use_blackwell_hybrid
     use_tf32 = major in (9, 10, 11, 12)
-    if use_hopper_gemm:
+    if capability == (7, 0):
+        name = "experimental_volta_ieee"
+    elif use_hopper_gemm:
         name = "native_sm90_plus"
     elif use_blackwell_hybrid:
         name = "blackwell_cute_cublas"
@@ -146,6 +148,9 @@ def _kernel_policy(capability: tuple[int, int]) -> _KernelPolicy:
 
 
 _KERNEL_POLICY = _kernel_policy(_CUDA_CAPABILITY)
+_IS_VOLTA = _CUDA_CAPABILITY == (7, 0)
+if _IS_VOLTA:
+    from ._volta import gather as _volta_gather, scatter as _volta_scatter
 
 if _KERNEL_POLICY.use_cute_kernels:
     import cuda.bindings.driver as cuda
@@ -5891,7 +5896,9 @@ def _scatter_src_v4_fp16_torch(
 
 scatter_src_v4_fp16 = torch.library.custom_op(
     "uma_nitro::scatter_src_v4_fp16", mutates_args={"out"}, device_types="cuda"
-)(scatter_src_v4_fp16 if _USE_CUTEDSL else _scatter_src_v4_fp16_torch)
+)(scatter_src_v4_fp16 if _USE_CUTEDSL else (
+    _volta_scatter if _IS_VOLTA else _scatter_src_v4_fp16_torch
+))
 
 
 @scatter_src_v4_fp16.register_fake
@@ -5965,7 +5972,9 @@ def _gather_node_v4_torch(
 
 gather_node_v4 = torch.library.custom_op(
     "uma_nitro::gather_node_v4", mutates_args={"out"}, device_types="cuda"
-)(gather_node_v4 if _USE_CUTEDSL else _gather_node_v4_torch)
+)(gather_node_v4 if _USE_CUTEDSL else (
+    _volta_gather if _IS_VOLTA else _gather_node_v4_torch
+))
 
 
 @gather_node_v4.register_fake
@@ -15677,10 +15686,15 @@ def _validate_device(device) -> None:
     if device.type != "cuda":
         raise UMANitroNotSupportedError("nitro mode requires a CUDA device")
     capability = torch.cuda.get_device_capability(device)
-    if capability[0] not in (8, 9, 10, 11, 12):
+    volta_enabled = (
+        capability == (7, 0)
+        and os.environ.get("UMA_NITRO_ENABLE_VOLTA", "0") == "1"
+    )
+    if capability[0] not in (8, 9, 10, 11, 12) and not volta_enabled:
         raise UMANitroNotSupportedError(
             "nitro mode supports only CUDA compute capability 8.x-12.x, "
-            f"not {capability[0]}.{capability[1]}"
+            f"not {capability[0]}.{capability[1]}; experimental sm_70 requires "
+            "UMA_NITRO_ENABLE_VOLTA=1 and the validated Volta environment"
         )
     if capability != _CUDA_CAPABILITY:
         # The kernel policy is chosen once, for the GPU current at import.
